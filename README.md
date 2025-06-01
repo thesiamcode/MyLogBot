@@ -95,5 +95,3 @@ In Replit, click **Run**.
 
 * The bot only works in the logging server after it clones the source structure.
 * It only logs **text messages** in text channels (not voice activity or threads).
-
----
