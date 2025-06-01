@@ -1,123 +1,128 @@
+# 📄 README: Discord Channel Logger Bot
 
-# Discord Server Logger Bot
+This project is a **Discord bot** built with **Python** and **discord.py**, designed to:
 
-A Discord bot that logs all server activity including messages, edits, and deletions to a designated logging channel. The bot includes a Flask web server for keep-alive functionality and keyword highlighting features.
+✅ Clone channels from a **source server** to a **logging server**
+✅ Log **all messages** (new, edited, deleted)
+✅ Include **author info, message link, timestamp, and attachments**
+✅ Include a **/status** command to check if the bot is online
+✅ Use **Flask** to stay online 24/7 with **UptimeRobot**
 
-## Features
+---
 
-- **Message Logging**: Logs all new messages with user details, timestamps, and attachments
-- **Edit Tracking**: Monitors message edits and shows before/after content
-- **Deletion Monitoring**: Captures deleted messages before they're lost
-- **Keyword Highlighting**: Automatically highlights messages containing specified keywords
-- **Attachment Support**: Downloads and re-uploads file attachments to the log channel
-- **Keep-Alive Server**: Built-in Flask server to prevent the bot from sleeping on free hosting
-- **Rich Embeds**: Beautiful Discord embeds with user avatars, timestamps, and jump links
+## 🌐 How to Set Up
 
-## Setup
+### 1️⃣ Create a Discord Bot
 
-### Prerequisites
+* Go to the [Discord Developer Portal](https://discord.com/developers/applications)
+* Click **New Application** → Give it a name
+* Go to **Bot** → **Add Bot**
+* Click **Reset Token** → **Copy the token** (you’ll use this later as `DISCORD_TOKEN`)
 
-- Python 3.11+
-- Discord Bot Token
-- Discord Server with appropriate permissions
+---
 
-### Environment Variables
+### 2️⃣ Get Your Server & Channel IDs
 
-Set up the following environment variables in your Replit Secrets:
+1. Enable **Developer Mode** in Discord:
 
-```
-DISCORD_TOKEN=your_discord_bot_token_here
-LOG_CHANNEL_ID=123456789012345678
-SERVER_ID=123456789012345678
-```
+   * Settings → Advanced → Developer Mode → ON
+2. Right-click your source server → **Copy Server ID**
+3. Right-click your logging server → **Copy Server ID**
 
-### Bot Permissions
+You’ll use these for:
 
-Your Discord bot needs the following permissions:
-- View Channels
-- Send Messages
-- Embed Links
-- Attach Files
-- Read Message History
-- Use Slash Commands
+* `SOURCE_SERVER_ID` = Your source server where users chat
+* `LOGGING_SERVER_ID` = Your logging server where logs go
 
-### Installation
+---
 
-1. Clone this repository to Replit
-2. Install dependencies (automatically handled by Replit)
-3. Set up your environment variables in Replit Secrets
-4. Invite the bot to your Discord server
-5. Run the project
+### 3️⃣ Set Up Replit Project
 
-## Configuration
+1. Go to [Replit](https://replit.com/) → Create a new **Python** repl
+2. Add the files:
 
-### Keyword Highlighting
+   * `main.py` (your bot code)
+   * `keep_alive.py` (Flask server code)
+3. Install libraries:
 
-Edit the `HIGHLIGHT_KEYWORDS` list in `main.py` to customize which words trigger special highlighting:
+   * In the Replit **Shell**, type:
 
-```python
-HIGHLIGHT_KEYWORDS = ["urgent", "important", "alert", "help"]
-```
+     ```
+     pip install discord.py flask
+     ```
+4. Create **Secrets** in Replit:
 
-### Server and Channel IDs
+   * Go to **Secrets (Lock icon)** on the left side
+   * Add these:
 
-- `SERVER_ID`: The Discord server (guild) ID where the bot should operate
-- `LOG_CHANNEL_ID`: The channel where all logs will be sent
+     ```
+     DISCORD_TOKEN = your bot token
+     SOURCE_SERVER_ID = your source server ID (number)
+     LOGGING_SERVER_ID = your logging server ID (number)
+     ```
 
-## Commands
+---
 
-- `/status` - Check if the bot is online and responding
+### 4️⃣ UptimeRobot Setup (Keep Bot Online 24/7)
 
-## File Structure
+1. Go to [UptimeRobot](https://uptimerobot.com/) → Sign up
+2. Click **Add New Monitor**
+3. Select **HTTP(s)**
+4. For **URL**, paste your Replit URL:
 
-```
-├── main.py           # Main bot code with event handlers
-├── keep_alive.py     # Flask server for keep-alive functionality
-├── requirements.txt  # Python dependencies
-└── README.md        # This file
-```
+   ```
+   https://<your-repl-username>.<your-repl-name>.repl.co
+   ```
+5. Set interval (e.g., 5 minutes)
+6. UptimeRobot will ping the Flask server → Replit won’t sleep → Bot stays online!
 
-## How It Works
+---
 
-1. **Keep-Alive**: The Flask server runs on port 8080 to keep the bot active
-2. **Event Monitoring**: The bot listens for message events (create, edit, delete)
-3. **Logging**: Creates rich embeds with user information and sends to log channel
-4. **Attachment Handling**: Downloads and re-uploads file attachments to preserve them
-5. **Keyword Detection**: Scans messages for important keywords and highlights them
+### 5️⃣ Run the Bot!
 
-## Deployment
+* Click the **Run** button in Replit
+* Your bot will log:
 
-This bot is designed to run on Replit. Simply click the "Run" button to start the bot. The Flask server will keep it alive even on free Replit accounts.
+  ```
+  ✅ Bot is online as <BotName>
+  ```
+* Test it in Discord:
 
-For production deployment, use Replit's deployment feature to ensure 24/7 uptime.
+  * Send a message → It’s logged
+  * Edit a message → It’s logged
+  * Delete a message → It’s logged
+  * Create or rename channels → It’s mirrored in the logging server!
 
-## Security Notes
+---
 
-- Never share your bot token publicly
-- Use Replit Secrets to store sensitive information
-- Regularly rotate your bot token if compromised
-- Ensure the bot only has necessary permissions
+## 📋 Commands
 
-## Troubleshooting
+| Command   | What it does            |
+| --------- | ----------------------- |
+| `/status` | Replies "✅ I’m online!" |
 
-### Bot Not Responding
-- Check that your bot token is correct in Secrets
-- Verify the bot has proper permissions in your Discord server
-- Ensure the SERVER_ID matches your Discord server
+---
 
-### Missing Logs
-- Confirm LOG_CHANNEL_ID is correct
-- Check that the bot can send messages in the log channel
-- Verify the bot has "Embed Links" and "Attach Files" permissions
+## 🛡️ Features Summary
 
-### Attachment Issues
-- Ensure the bot has "Attach Files" permission
-- Check file size limits (Discord has an 8MB limit for free servers)
+✅ Clone channels (create/rename)
+✅ Log messages (new, edited, deleted)
+✅ Include attachments
+✅ Author info, message link, timestamp
+✅ 24/7 uptime with UptimeRobot
+✅ Error handling (basic)
 
-## Contributing
+---
 
-Feel free to fork this project and submit pull requests for improvements!
+### 🎓 Credits
 
-## License
+Built with:
 
-This project is open source and available under the MIT License.
+* Python
+* discord.py
+* Flask
+* Replit
+
+---
+
+Let me know if you’d like a **markdown file** or a **PDF** version of the README! 📄
