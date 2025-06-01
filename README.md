@@ -1,128 +1,99 @@
-# 📄 README: Discord Channel Logger Bot
+# 📦 Discord Server Logger & Cloner Bot
 
-This project is a **Discord bot** built with **Python** and **discord.py**, designed to:
+This bot clones the structure of a source Discord server into a logging server (categories, text channels, voice channels) and **logs all messages** (new, edited, deleted) into the corresponding channels in the logging server.
 
-✅ Clone channels from a **source server** to a **logging server**
-✅ Log **all messages** (new, edited, deleted)
-✅ Include **author info, message link, timestamp, and attachments**
-✅ Include a **/status** command to check if the bot is online
-✅ Use **Flask** to stay online 24/7 with **UptimeRobot**
-
----
-
-## 🌐 How to Set Up
-
-### 1️⃣ Create a Discord Bot
-
-* Go to the [Discord Developer Portal](https://discord.com/developers/applications)
-* Click **New Application** → Give it a name
-* Go to **Bot** → **Add Bot**
-* Click **Reset Token** → **Copy the token** (you’ll use this later as `DISCORD_TOKEN`)
+✅ Logs **all** messages
+✅ Clones **categories, text channels, and voice channels**
+✅ Logs message **content, edits, deletions**, attachments, timestamps, author info
+✅ Supports `/status` command in logging server
+✅ Runs **24/7 on Replit** with a keep-alive server
 
 ---
 
-### 2️⃣ Get Your Server & Channel IDs
+## 🛠️ Setup Guide
 
-1. Enable **Developer Mode** in Discord:
+### 1️⃣ Create Your Discord Bot
 
-   * Settings → Advanced → Developer Mode → ON
-2. Right-click your source server → **Copy Server ID**
-3. Right-click your logging server → **Copy Server ID**
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Click **"New Application"** → Name it → Go to **Bot** → **Add Bot**
+3. Enable **Message Content Intent** under **Privileged Gateway Intents**
+4. Copy the **Bot Token** (you’ll need this for Replit)
 
-You’ll use these for:
+### 2️⃣ Get Server and Channel IDs
 
-* `SOURCE_SERVER_ID` = Your source server where users chat
-* `LOGGING_SERVER_ID` = Your logging server where logs go
+1. In Discord, go to **User Settings → Advanced → Developer Mode → Enable**
+2. Right-click your servers:
 
----
+   * **Source Server** → Click **Copy Server ID**
+   * **Logging Server** → Click **Copy Server ID**
 
-### 3️⃣ Set Up Replit Project
+### 3️⃣ Set Up Replit
 
-1. Go to [Replit](https://replit.com/) → Create a new **Python** repl
-2. Add the files:
+1. Go to [Replit](https://replit.com) → Create a new **Python Repl**
+2. Upload the following files:
 
-   * `main.py` (your bot code)
-   * `keep_alive.py` (Flask server code)
-3. Install libraries:
+   * `main.py` (the bot code)
+   * `keep_alive.py` (you already have this from previous steps)
+3. In Replit, open the **Secrets** tab (lock icon) and add:
 
-   * In the Replit **Shell**, type:
+   * `DISCORD_TOKEN` → Your bot token
+   * `SOURCE_SERVER_ID` → The source server ID
+   * `LOGGING_SERVER_ID` → The logging server ID
 
-     ```
-     pip install discord.py flask
-     ```
-4. Create **Secrets** in Replit:
+### 4️⃣ Install Libraries
 
-   * Go to **Secrets (Lock icon)** on the left side
-   * Add these:
+In the Replit **Shell**, run:
 
-     ```
-     DISCORD_TOKEN = your bot token
-     SOURCE_SERVER_ID = your source server ID (number)
-     LOGGING_SERVER_ID = your logging server ID (number)
-     ```
+```bash
+pip install discord.py
+```
 
----
+If `Flask` is not installed:
 
-### 4️⃣ UptimeRobot Setup (Keep Bot Online 24/7)
+```bash
+pip install Flask
+```
 
-1. Go to [UptimeRobot](https://uptimerobot.com/) → Sign up
-2. Click **Add New Monitor**
-3. Select **HTTP(s)**
-4. For **URL**, paste your Replit URL:
+### 5️⃣ Run Your Bot
 
-   ```
-   https://<your-repl-username>.<your-repl-name>.repl.co
-   ```
-5. Set interval (e.g., 5 minutes)
-6. UptimeRobot will ping the Flask server → Replit won’t sleep → Bot stays online!
+In Replit, click **Run**.
+✅ The Replit console should say **Bot is online** and the server will be cloned.
 
 ---
 
-### 5️⃣ Run the Bot!
+## 🌐 Keep Bot Online 24/7 (UptimeRobot)
 
-* Click the **Run** button in Replit
-* Your bot will log:
+1. Go to [UptimeRobot](https://uptimerobot.com/)
+2. Create a free account → Add **New Monitor**:
 
-  ```
-  ✅ Bot is online as <BotName>
-  ```
-* Test it in Discord:
-
-  * Send a message → It’s logged
-  * Edit a message → It’s logged
-  * Delete a message → It’s logged
-  * Create or rename channels → It’s mirrored in the logging server!
+   * Type: HTTP(s)
+   * URL: Your Replit web URL (it appears in the console when you run)
+   * Interval: 5 minutes
+3. Done! Your bot will stay online.
 
 ---
 
-## 📋 Commands
+## 📝 Commands
 
-| Command   | What it does            |
-| --------- | ----------------------- |
-| `/status` | Replies "✅ I’m online!" |
+* `/status` → Responds with "I’m online!" (in logging server only)
 
 ---
 
-## 🛡️ Features Summary
+## 🔍 What It Logs
 
-✅ Clone channels (create/rename)
-✅ Log messages (new, edited, deleted)
-✅ Include attachments
-✅ Author info, message link, timestamp
-✅ 24/7 uptime with UptimeRobot
-✅ Error handling (basic)
-
----
-
-### 🎓 Credits
-
-Built with:
-
-* Python
-* discord.py
-* Flask
-* Replit
+✅ New messages
+✅ Edited messages (with old content)
+✅ Deleted messages
+✅ Attachments (files/images)
+✅ Author name & profile picture
+✅ Timestamp
+✅ Channel structure stays organized
 
 ---
 
-Let me know if you’d like a **markdown file** or a **PDF** version of the README! 📄
+## 🚫 Limitations
+
+* The bot only works in the logging server after it clones the source structure.
+* It only logs **text messages** in text channels (not voice activity or threads).
+
+---
